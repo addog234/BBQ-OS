@@ -1,0 +1,154 @@
+個人專題
+----------------------------
+發表日期: 11/15
+題目: Window Form App + SQL Server CRUD 銷售系統 Sales
+主題: 發想主題, 例: 速食店, 壽司店, 早餐店, 咖啡店, 甜點, 冷飲店, 鹹酥雞, 設計師預約, 寵物美容, 玩具店
+----------------------------
+需求規格:
+* 採用技術: Windows Form, Visual Studio 2022, SQL Server Developer
+* 收集資料: 菜單, 商品照片, 媒體素材, 網路資料, AI生成資料(個資, 產品照, 人物照, 寵物照), 網路下載
+* 功能需求:
+
+
+員工資料表(管理者編號、姓名  、職位、全部權限、密碼、電話、住址、EMAIL、到職日期、離職日期) 
+產品資料表(產品編號、產品類別、單價、成本、狀態) 
+會員資料表(姓名、電話、住址、EMAIL、點數、生日、狀態)
+庫存資料表(商品編號、庫存數、狀態)
+訂單資料表(訂單編號、產品編號、會員編號、產品數量、單價、日期、狀態、建單人(員工編號))
+
+
+
+----------------------------------
+Level 1: 訂購表單Forms
+a. 瀏覽商品, 訂購商品
+b. 購物車, 結帳, 預約定
+----------------------------------
+Level 2: 會員資料表單Forms
+a. 會員註冊, 修改會員資料
+b. 審核, 停權, 刪除, 黑名單
+c. 客服功能: 會員搜尋,// 歷史訂單查詢
+-----------------------------------
+Level 3: 商品管理Forms
+a. 商品上下架(正常, 缺貨, 停賣)
+b. 新增, 修改, 刪除商品(商品資訊, 圖檔)
+c. 商品搜尋
+-----------------------------------
+Level 4: 訂單管理Forms
+a. 訂單審核, 出貨, 取消, 延遲出貨
+b. 訂單搜尋, 修改
+c. 計算營業額報告(年,月,日,指定區間), 繪製統計圖表呈現
+------------------------------------
+Level 5: 系統管理設定Forms
+a. 權限管理: 店長,店員,管理員,客戶, 登入後不同功能
+b. 打卡系統
+c. 系統運作時間設定
+------------------------------------
+發表會 - 注意事項:
+
+INSERT INTO EmployeeData (ManagerID, FullName, JobTitle, Password, Address, Email, HireDate, TerminationDate, Permissions)
+VALUES
+('MGR001', '張偉', '經理', 'password001', '台北市中正區忠孝東路一段123號', 'zhang.wei@email.com', '2024-01-01', NULL, 'A'),
+('MGR002', '李娜', '副經理', 'password002', '新北市板橋區中山路二段456號', 'li.na@email.com', '2024-02-01', NULL, 'B'),
+('MGR003', '王強', '主管', 'password003', '台中市南區建國路三段789號', 'wang.qiang@email.com', '2024-03-01', NULL, 'C'),
+('MGR004', '林美麗', '經理', 'password004', '高雄市前金區中正路101號', 'lin.meili@email.com', '2024-04-01', NULL, 'A'),
+('MGR005', '陳志明', '副經理', 'password005', '台北市信義區市府路202號', 'chen.zhimin@email.com', '2024-05-01', NULL, 'B'),
+('MGR006', '黃婷婷', '主管', 'password006', '台南市北區永華路三段303號', 'huang.tingting@email.com', '2024-06-01', NULL, 'C'),
+('MGR007', '李大偉', '經理', 'password007', '桃園市中壢區中華路四段404號', 'li.dawi@email.com', '2024-07-01', NULL, 'A'),
+('MGR008', '王小美', '副經理', 'password008', '新竹市東區光復路五段505號', 'wang.xiaomei@email.com', '2024-08-01', NULL, 'B'),
+('MGR009', '張建民', '主管', 'password009', '基隆市中山區仁愛路六段606號', 'zhang.jianmin@email.com', '2024-09-01', NULL, 'C'),
+('MGR010', '陳麗華', '經理', 'password010', '台中市北區建國路七段707號', 'chen.lihua@email.com', '2024-10-01', NULL, 'A'),
+('MGR011', '李光輝', '副經理', 'password011', '台南市東區中華路八段808號', 'li.guanghui@email.com', '2024-11-01', NULL, 'B'),
+('MGR012', '張婷', '主管', 'password012', '台北市大安區和平東路九段909號', 'zhang.ting@email.com', '2024-12-01', NULL, 'C'),
+('MGR013', '黃國倫', '經理', 'password013', '高雄市左營區中正路111號', 'huang.guolun@email.com', '2025-01-01', NULL, 'A'),
+('MGR014', '劉思瑤', '副經理', 'password014', '新北市三峽區福州路二段222號', 'liu.siyao@email.com', '2025-02-01', NULL, 'B'),
+('MGR015', '陳志文', '主管', 'password015', '台中市南區建國路三段333號', 'chen.zhiwen@email.com', '2025-03-01', NULL, 'C'),
+('MGR016', '林靜茹', '經理', 'password016', '台北市信義區松仁路444號', 'lin.jingru@email.com', '2025-04-01', NULL, 'A'),
+('MGR017', '李俊豪', '副經理', 'password017', '新竹市香山區中華路五段555號', 'li.junhao@email.com', '2025-05-01', NULL, 'B'),
+('MGR018', '張瑋', '主管', 'password018', '高雄市前鎮區建國路六段666號', 'zhang.wei@email.com', '2025-06-01', NULL, 'C'),
+('MGR019', '劉建偉', '經理', 'password019', '台北市南港區經貿路七段777號', 'liu.jianwei@email.com', '2025-07-01', NULL, 'A'),
+('MGR020', '王靜怡', '副經理', 'password020', '台中市西區自由路八段888號', 'wang.jingyi@email.com', '2025-08-01', NULL, 'B'),
+('MGR021', '黃豪傑', '主管', 'password021', '基隆市安樂區中山路九段999號', 'huang.haojie@email.com', '2025-09-01', NULL, 'C'),
+('MGR022', '李翠萍', '經理', 'password022', '台北市大安區忠孝東路十一段111號', 'li.cuiping@email.com', '2025-10-01', NULL, 'A'),
+('MGR023', '陳瑞德', '副經理', 'password023', '新北市土城區中央路二段222號', 'chen.ruide@email.com', '2025-11-01', NULL, 'B'),
+('MGR024', '張慧婷', '主管', 'password024', '台中市南區建國路四段333號', 'zhang.huiting@email.com', '2025-12-01', NULL, 'C'),
+('MGR025', '劉家豪', '經理', 'password025', '高雄市三民區建國路四段444號', 'liu.jiahao@email.com', '2026-01-01', NULL, 'A'),
+('MGR026', '李麗莎', '副經理', 'password026', '台南市中西區中華路五段555號', 'li.lisha@email.com', '2026-02-01', NULL, 'B'),
+('MGR027', '陳冠宇', '主管', 'password027', '台北市大同區民生西路六段666號', 'chen.guanyu@email.com', '2026-03-01', NULL, 'C'),
+('MGR028', '黃思穎', '經理', 'password028', '台北市信義區市府路七段777號', 'huang.siying@email.com', '2026-04-01', NULL, 'A'),
+('MGR029', '王思涵', '副經理', 'password029', '台中市北區建國路八段888號', 'wang.sihan@email.com', '2026-05-01', NULL, 'B'),
+('MGR030', '李玟', '主管', 'password030', '台北市中山區南京東路九段999號', 'li.wen@email.com', '2026-06-01', NULL, 'C');
+
+
+
+
+CREATE TABLE Employees (
+    ManagerID NVARCHAR(8) PRIMARY KEY,  -- 管理者編號，8碼，主鍵
+    Name NVARCHAR(30) NOT NULL,         -- 姓名
+    Position NVARCHAR(20),              -- 職位
+    Permission NVARCHAR(1),             -- 權限 (A, B, C)
+    Password NVARCHAR(16) NOT NULL,     -- 密碼（只能包含英文和數字）
+    Phone NVARCHAR(20),                 -- 電話
+    Address NVARCHAR(100),              -- 住址
+    Email NVARCHAR(50),                 -- EMAIL
+    HireDate DATETIME NOT NULL,         -- 到職日期
+    ResignDate DATETIME                 -- 離職日期 (可為NULL)
+);
+
+-- 會員資料表 (Member)
+CREATE TABLE Member (
+    MemberID NVARCHAR(20) PRIMARY KEY,   -- 會員編號 (主鍵，必填)
+    Name NVARCHAR(50) NOT NULL,          -- 姓名 (必填)
+    Phone NVARCHAR(20) NULL,             -- 電話 (可為空值)
+    Address NVARCHAR(100) NULL,          -- 住址 (可為空值)
+    Email NVARCHAR(100) NULL,            -- EMAIL (可為空值)
+    Points INT NULL,                     -- 點數 (可為空值)
+    Birthdate DATE NULL,                 -- 生日 (可為空值)
+    Status NVARCHAR(10) NULL             -- 狀態 (可為空值，VIP或黑名單)
+);
+
+-- 產品資料表 (Product)
+CREATE TABLE Product (
+    ProductID NVARCHAR(20) PRIMARY KEY NOT NULL,  -- 產品編號 (主鍵，不可空值)
+	 ProductName NVARCHAR(100) NOT NULL,
+    Category NVARCHAR(50) NOT NULL,               -- 產品類別 (不可空值)
+    UnitPrice DECIMAL(10, 2) NOT NULL,            -- 單價 (不可空值)
+    Cost DECIMAL(10, 2) NOT NULL,                 -- 成本 (不可空值)
+    Status NVARCHAR(10) NOT NULL                  -- 狀態 (不可空值，正常/下架/無庫存)
+);
+
+-- 庫存資料表 (Stock)
+CREATE TABLE Stock (
+    ProductID NVARCHAR(20) PRIMARY KEY,           -- 商品編號 (主鍵，且作為外來鍵)
+    StockQuantity INT NOT NULL,                   -- 庫存數量 (不可空值)
+    Status NVARCHAR(10) NOT NULL,                 -- 狀態 (不可空值，正常/無庫存等)
+    
+    CONSTRAINT FK_Product_Stock FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
+
+-- 訂單資料表 (Orders)
+CREATE TABLE Orders (
+    OrderID NVARCHAR(20) PRIMARY KEY NOT NULL,  -- 訂單編號 (主鍵)
+    MemberID NVARCHAR(20) NOT NULL,             -- 會員編號 (外來鍵)
+    OrderDate DATE NOT NULL,                    -- 訂單日期 (不可空)
+    Status NVARCHAR(10) NOT NULL,               -- 訂單狀態 (不可空)
+    EmployeeID NVARCHAR(8) NULL,                -- 建單人 (員工編號，可空)
+
+    -- 外來鍵約束
+    CONSTRAINT FK_Order_Member FOREIGN KEY (MemberID) REFERENCES Member(MemberID),
+    CONSTRAINT FK_Order_Employee FOREIGN KEY (EmployeeID) REFERENCES Employees(ManagerID)
+);
+
+-- 訂單明細表 (OrderDetails)
+CREATE TABLE OrderDetails (
+    OrderDetailID INT PRIMARY KEY IDENTITY(1,1), -- 訂單明細編號，自動遞增作為主鍵
+    OrderID NVARCHAR(20) NOT NULL,               -- 訂單編號 (外來鍵，來自訂單表)
+    ProductID NVARCHAR(20) NOT NULL,             -- 產品編號 (外來鍵，來自產品表)
+    Quantity INT NOT NULL,                       -- 產品數量 (不可空值)
+    UnitPrice DECIMAL(10, 2) NOT NULL,           -- 單價 (不可空值)
+
+    -- 外來鍵約束
+    CONSTRAINT FK_OrderDetail_Order FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    CONSTRAINT FK_OrderDetail_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+
+
+

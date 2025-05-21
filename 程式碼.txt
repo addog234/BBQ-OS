@@ -1,0 +1,376 @@
+ public interface IMan
+ {
+     
+     string 顯示職稱(MyEnum.Man 職稱代號);
+     string 顯示職稱EN(MyEnum.Man 職稱代號);
+ }
+
+ public class Personinfo<T>  
+     
+     //List distionary 都是 泛型
+ {
+     public T myData;
+     public T myValue {  get; set; }
+
+     public void saveData(T inputData) 
+     {
+         myData = inputData;
+         switch(Type.GetTypeCode(typeof(T)))
+         {
+             case TypeCode.String:
+                 Console.WriteLine("型態是String");
+                 break;
+             case TypeCode.Boolean:
+                 Console.WriteLine("型態是boolean");
+                 break;
+             case TypeCode.Char:
+                 Console.WriteLine("型態是double");
+                 break;
+             case TypeCode.Int32:
+                 Console.WriteLine("型態是Int32");
+                 break;
+             case TypeCode.Single:
+                 Console.WriteLine("型態是float");
+                 break;
+             case TypeCode.Double:
+                 Console.WriteLine("型態是Double");
+                 break;
+             default:
+                 Console.WriteLine("其他型態");
+                 break;
+
+public struct AddressInfo
+{
+    public MyEnum.Post 郵遞區號;
+    public string 縣市;
+    public string 行政區;
+    public string 街道門牌;
+
+    //intruct 跟CLASS有何不同  public AddressInfo(MyEnum.Post postNume, string city, string area, string streetNo) 為甚麼是MYKNEUM
+    public AddressInfo(MyEnum.Post postNume, string city, string area, string streetNo)
+
+    {
+        郵遞區號 = postNume;
+        縣市 = city;
+        行政區 = area;
+        街道門牌 = streetNo;
+        
+    }
+    public string 輸出完整地址()
+    {
+        return $"{(int)郵遞區號}{縣市}{行政區}{街道門牌}";
+    }
+    public string 輸出無郵遞區號地址()
+    {
+        return $"{縣市}{行政區}{街道門牌}";
+    }
+
+}
+
+public class GlobalVariable
+{
+    //全域變數
+    public static string myGlobalVar1 = "";
+    public static int myGlobalVar2 = 0;
+    //常數不可變動
+    public const double pi = 3.141592;
+
+}
+
+        public enum Dep
+        {
+            行政處 = 101,
+            資訊處 =102,
+            業務部 = 103,
+            研發部 = 104
+
+        }
+        //職稱代號
+        public enum Man
+        {
+            董事長 = 10,
+            總經理 = 11,
+            副總 = 12,
+            經理 = 13,
+            協理 = 14,
+            組長 = 15
+        }
+
+        public enum Post
+        {
+            台北市 = 100,
+            台中市 = 400,
+            台南市 = 700,
+            高雄市 = 800,
+            屏東市 = 900,
+        }
+
+
+
+    }
+
+ public class Manager :Person  , IMan //後面加上父類別名稱
+ {
+     public MyEnum.Man 職稱代號;
+      public override int 薪資
+
+     {
+         get
+         //取值
+         {
+             return _薪資;
+         }
+         set 
+         {
+             if (value < 27470)
+             {
+                 value = 27470;
+             }
+             value += 6000;//主管加給
+             _薪資 = value;
+         }
+      
+     
+     }
+     public Manager() 
+     {
+
+         Console.WriteLine("Manager建構式執行");
+     }
+
+     public Manager(string myName, DateTime my到職日)
+     {
+         Console.WriteLine("Manager 多載建構式執行...");
+         this.姓名 = myName;
+         this.到職日 = my到職日;
+         Console.WriteLine($"讀取全域變數1:{GlobalVariable.myGlobalVar1}");
+         Console.WriteLine($"讀取全域變數2:{GlobalVariable.myGlobalVar2}");
+         Console.WriteLine($"讀取常數 pi{GlobalVariable.pi}");
+     }
+     public override void 顯示基本資料()
+     {   
+        // base.顯示基本資料(); //父類別的關鍵字
+         string strMsg = $"{姓名}\n身高:{身高}\n體重{體重}kg\n到職日:{到職日:d}\n薪資:{薪資}元\n職稱:{顯示職稱EN(職稱代號)}\n部門代號:{部門代號}\nemail:{Email.myData}\n年齡:{年齡.myData}\n地址:{地址.輸出完整地址()}\n";
+         MessageBox.Show(strMsg);
+     }
+     public string 顯示職稱(MyEnum.Man my職稱代號)
+     {
+         string strman = "";
+         switch (my職稱代號)
+         {
+             case MyEnum.Man.董事長:
+                 strman = "集團董事長";  //這串可以改不一定要一樣
+                 break;
+             case MyEnum.Man.總經理:
+                 strman = "CEO";
+                 break;
+             case MyEnum.Man.副總:
+                 strman = "集團副總";
+                 break;
+             case MyEnum.Man.經理:
+                 strman = "經理";
+                 break;
+             case MyEnum.Man.協理:
+                 strman = "協理";
+                 break;
+             case MyEnum.Man.組長:
+                 strman = "組長";
+                 break;
+             default:
+                 strman = "無此值稱";
+                 break;
+
+         }
+         return strman;
+     }
+     public string 顯示職稱EN(MyEnum.Man my職稱代號)
+     {
+         string strMan = "";
+         Dictionary<MyEnum.Man, string> dict職稱 = new Dictionary<MyEnum.Man, string>()
+ {
+     { MyEnum.Man.董事長, "President" },
+     { MyEnum.Man.總經理, "General Manager" },
+     { MyEnum.Man.副總, "Vice President" },
+     { MyEnum.Man.經理, "Manager" },
+     { MyEnum.Man.協理, "Director" },
+     { MyEnum.Man.組長, "Team Leader" },
+ };
+
+         try
+         {
+             strMan = dict職稱[my職稱代號];
+
+         }
+
+         catch (Exception e)
+         {
+             MessageBox.Show($"職稱代號錯誤: {e.Message}");
+         }
+         return strMan;
+
+
+     }
+
+ }
+public partial class Form1 : Form
+{
+    List<Person>List員工資料集合 = new List<Person>();
+    public Form1()
+    {
+        InitializeComponent();
+    }
+
+    private void Form1_Load(object sender, EventArgs e)
+    {
+        Person.aboutInfo();
+
+        GlobalVariable.myGlobalVar1 = "全域變數資料";
+        GlobalVariable.myGlobalVar2 = 888;
+
+        //GlobalVariable.pi.2.31456 //錯誤常數不可修改
+        if(MyEnum.Man.總經理 > MyEnum.Man.董事長)
+        {
+            Console.WriteLine("總經理小於懂市長");
+        }
+    }
+
+    private void btnStaff1_Click(object sender, EventArgs e)
+    {
+        Person 員工1 = new Person();
+        員工1.姓名 = "王大衛";
+        員工1.身高 = 170.0F;
+        員工1.體重 = 75.0;
+        員工1.到職日 = Convert.ToDateTime("2018/04/07");
+        員工1.薪資= 18000;
+        員工1.部門代號 = MyEnum.Dep.行政處;
+        員工1.Email.myData = "DavidWang@test.com.tw";
+       // 員工1.年齡.myData = 32;
+       員工1.年齡.saveData(32);  //選擇一個
+        員工1.地址 = new AddressInfo(MyEnum.Post.高雄市,"高雄市","前金區","中正路88號");
+        員工1.顯示基本資料();
+        List員工資料集合.Add(員工1);
+        
+    }
+
+    private void btnStaff2_Click(object sender, EventArgs e)
+    {
+        Person 員工2 = new Person("李瑪莉");
+       //員工2.姓名 = "李瑪莉";
+        員工2.身高 = 160.0f;
+        員工2.體重 = 50.0;
+        員工2.到職日 = new DateTime(2020,7,2,9,0,0);
+        員工2.薪資 = 45000;
+        員工2.部門代號 = MyEnum.Dep.資訊處;
+        
+        員工2.Email.myData = "Marylee@test.com.tw";
+        員工2.年齡.myData = 36;
+        員工2.地址 = new AddressInfo(MyEnum.Post.台中市, "台中市", "東區", "中港路788號");
+        員工2.顯示基本資料();
+        List員工資料集合.Add(員工2);
+        
+    }
+
+    private void bt3Staffall_Click(object sender, EventArgs e)
+    {
+        string strMsg = "";
+        for (int i = 0; i < List員工資料集合.Count; i++)
+        {
+            Person myPerson = List員工資料集合[i];
+            strMsg += $"{myPerson.姓名},{myPerson.身高},{myPerson.體重},{myPerson.到職日},{myPerson.薪資}\n{myPerson.部門代號}\n{myPerson.Email.myData}\n年齡:{myPerson.年齡.myData}{myPerson.地址.輸出完整地址()}\n";
+            strMsg += "-----------------------------\n";
+        }
+        strMsg += $"共有{List員工資料集合.Count}筆資料";
+
+        MessageBox.Show(strMsg);
+    }
+
+    private void btnManager_Click(object sender, EventArgs e)
+    {
+        Manager 管理者1 = new Manager("張經理",Convert.ToDateTime("2000/05/21")); // 建構式多載? 問號
+       // 管理者1.姓名 = "張經理";
+        管理者1.身高 = 170.0f;
+        管理者1.體重 = 78.0;
+        管理者1.薪資 = 80000;
+        //管理者1.職稱代號 = MyEnum.Man.經理;
+        //管理者1.到職日 = Convert.ToDateTime("2000/05/21");
+        管理者1.職稱代號 = (MyEnum.Man)12;
+        管理者1.部門代號 = MyEnum.Dep.業務部;
+        管理者1.年齡.myData = 46;
+        管理者1.Email.myData = "Change@test.com.tw";
+        管理者1.地址 = new AddressInfo(MyEnum.Post.台北市, "台北市", "中山區", "南京東路");
+        管理者1.顯示基本資料();
+
+    }
+}
+
+ public class Person
+ {
+     //class member成員
+     //field 欄位(類別變數)
+     public float 身高 = 0.0f;
+     public double 體重 = 0.0;
+     public  DateTime 到職日 = DateTime.Now;
+     public MyEnum.Dep 部門代號;
+     //Property屬性
+
+     public string 姓名{get;set;}
+    // private int _薪資;
+    //改成protected int
+    protected int _薪資;
+
+     public virtual int 薪資 //欄位
+     {
+         get
+             //取值
+         {
+             return _薪資;
+         }
+         set
+             
+         {//設定值
+             if (value < 27470)
+             {
+                 value = 27470;
+             }
+                 _薪資 = value;
+         }
+
+     }
+
+     //泛型欄位
+     public Personinfo<string> Email = new Personinfo<string>();
+     public Personinfo<int> 年齡 = new Personinfo<int>();
+
+     //Struct 
+     public AddressInfo 地址;
+     //Method方法
+     public Person()
+       { 
+         
+         //建構式,建構方法,Construcstor,初始化方法,預設
+         Console.WriteLine("Person建構式執行.......");
+     }
+     public Person(string name)
+     {//建構式多載
+         姓名 = name;
+         Console.WriteLine("Perosn多載建構式執行..");
+     }
+      public static void aboutInfo()
+       {
+
+        /*   List<int> Listint = new List<int>() { 1, 5, 4, 3, 2 };
+           Listint[3] = 11;
+           for (int i =0;1<Listint.Count;i ++)
+           {
+               Console.WriteLine($"Person{Listint[i]}");
+           }*/
+          MessageBox.Show($"類別名稱:Person\n 功能:儲存員工基本資料\n,版本:1.0");
+     }
+
+
+     public virtual void 顯示基本資料()
+     {
+         string strMsg = $"{姓名}\n身高:{身高}\n體重{體重}kg\n到職日:{到職日:d}\n薪資:{薪資}\n部門代號:{部門代號}\n Email:{Email.myData}\n年齡:{年齡.myData}\n地址:{地址.輸出完整地址()}";
+         MessageBox.Show(strMsg);    
+
+     }
